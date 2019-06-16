@@ -1,0 +1,176 @@
+package cafe.comp;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.BoxLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Collections;
+import java.util.List;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JComboBox;
+import java.awt.FlowLayout;
+import javax.swing.border.TitledBorder;
+
+import cafe.bean.donViTinh;
+import cafe.bean.khuVuc;
+import cafe.bean.loaiBangGia;
+import cafe.bean.sanPhongBan;
+import cafe.bo.donViTinhBo;
+import cafe.bo.donViTinhBoJDBC;
+import cafe.bo.khuVucBo;
+import cafe.bo.khuVucBoJDBC;
+import cafe.bo.loaiBangGiaBo;
+import cafe.bo.loaiBangGiaBoJDBC;
+import cafe.bo.sanPhongBanBo;
+import cafe.bo.sanPhongBanBoJDBC;
+
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.ImageIcon;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
+
+public class danhMucDonViTinh_edit extends JFrame implements ActionListener{
+
+	private JPanel contentPane;
+	private JPanel banPhong;
+	private JPanel banPhong2;
+	private JPanel panel_2;
+	private JButton close;
+	private JButton saveClose;
+	private JButton save;
+	private JLabel lblMBnMi;
+	private JTextField valueMaDVT;
+
+	private danhMucDonViTinh danhMucDonViTinh;
+	private JCheckBox valueMacDinh;
+	private JTextField valueTenDVT;
+
+	private donViTinhBo donViTinhBo = new donViTinhBoJDBC();
+
+	/**
+	 * Create the frame.
+	 */
+	public danhMucDonViTinh_edit(danhMucDonViTinh danhMucDonViTinh, String maDVT) {
+		this.danhMucDonViTinh = danhMucDonViTinh;
+
+		setTitle("Đơn vị tính");
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setBounds(100, 100, 503, 286);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(20,20,20,20));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		setLocationRelativeTo(null);
+		setResizable(false);
+
+		banPhong = new JPanel();
+		contentPane.add(banPhong, BorderLayout.CENTER);
+		banPhong.setLayout(new BorderLayout(0, 0));
+
+		banPhong2 = new JPanel();
+		banPhong2.setBorder(new TitledBorder(null, "Th\u00F4ng tin", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		banPhong.add(banPhong2);
+		banPhong2.setLayout(null);
+
+		JLabel lblNewLabel = new JLabel("Tên đơn vị tính");
+		lblNewLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblNewLabel.setBounds(10, 66, 101, 27);
+		banPhong2.add(lblNewLabel);
+
+		lblMBnMi = new JLabel("Mã mới ( viết chữ liền không dấu )");
+		lblMBnMi.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblMBnMi.setBounds(10, 28, 227, 27);
+		banPhong2.add(lblMBnMi);
+
+
+		valueMaDVT = new JTextField();
+		valueMaDVT.setText(maDVT);
+		valueMaDVT.setEditable(false);
+		valueMaDVT.setFont(new Font("Dialog", Font.PLAIN, 15));
+		valueMaDVT.setBounds(237, 28, 183, 25);
+		banPhong2.add(valueMaDVT);
+		valueMaDVT.setColumns(10);
+
+		valueMacDinh = new JCheckBox("Mặc định");
+		valueMacDinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		valueMacDinh.setBounds(335, 109, 85, 23);
+		banPhong2.add(valueMacDinh);
+
+		valueTenDVT = new JTextField();
+		valueTenDVT.setFont(new Font("Dialog", Font.PLAIN, 15));
+		valueTenDVT.setColumns(10);
+		valueTenDVT.setBounds(121, 66, 299, 25);
+		banPhong2.add(valueTenDVT);
+
+		panel_2 = new JPanel();
+		panel_2.setBorder(new TitledBorder(null, "Ch\u1EE9c n\u0103ng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		banPhong.add(panel_2, BorderLayout.SOUTH);
+		panel_2.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+
+		save = new JButton("Lưu");
+		save.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_2.add(save);
+
+		saveClose = new JButton("Lưu & đóng");
+		saveClose.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_2.add(saveClose);
+
+		close = new JButton("Đóng");
+		close.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_2.add(close);
+
+
+		close.addActionListener(this);
+		saveClose.addActionListener(this);
+		save.addActionListener(this);
+		setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == save) {
+			edit();
+		}
+
+		if(e.getSource() == saveClose) {
+			edit();
+			this.dispose();
+		}
+
+		if(e.getSource() == close) {
+			this.dispose();
+		}
+
+		danhMucDonViTinh.load_add();
+	}
+
+	public boolean checkRegexDVT() {
+		String reGex = valueMaDVT.getText().toUpperCase();
+		return reGex.matches("[A-Z]+");
+	}
+
+	public void edit() {
+		if(valueTenDVT.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Bạn nhập thiếu dữ liệu", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+		if(!donViTinhBo.isMaDVT(valueMaDVT.getText())) {
+			JOptionPane.showMessageDialog(null, "Mã này đã tồn tại ( hãy thử lại )", "Lỗi", JOptionPane.ERROR_MESSAGE);
+		}else {
+			String result = donViTinhBo.update(new donViTinh(valueMaDVT.getText().toUpperCase(), valueTenDVT.getText(), valueMacDinh.isSelected() ? 1 : 0));
+			JOptionPane.showMessageDialog(null, result, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+}
