@@ -5,11 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import cafe.bean.khuVuc;
-import cafe.bean.nhanVien;
 import cafe.bean.sanPhongBan;
 
 public class sanPhongBanDaoJDBC implements sanPhongBanDao {
@@ -34,7 +31,7 @@ public class sanPhongBanDaoJDBC implements sanPhongBanDao {
 			}
 			return ress;
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		} finally {
 			dataBase.disconect(conn);
 		}
@@ -62,7 +59,7 @@ public class sanPhongBanDaoJDBC implements sanPhongBanDao {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		} finally {
 			dataBase.disconect(conn);
@@ -93,7 +90,7 @@ public class sanPhongBanDaoJDBC implements sanPhongBanDao {
 				return "Cập nhật thành công";
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		}finally {
 			dataBase.disconect(conn);
@@ -122,7 +119,7 @@ public class sanPhongBanDaoJDBC implements sanPhongBanDao {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		} finally {
 			dataBase.disconect(conn);
@@ -146,7 +143,7 @@ public class sanPhongBanDaoJDBC implements sanPhongBanDao {
 				return true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return false;
 		} finally {
 			dataBase.disconect(conn);
@@ -183,7 +180,7 @@ public class sanPhongBanDaoJDBC implements sanPhongBanDao {
 			}
 			return ress;
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		} finally {
 			dataBase.disconect(conn);
 		}

@@ -1,6 +1,7 @@
 package cafe.bo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cafe.bean.loaiBangGia;
 import cafe.dao.loaiBangGiaDaoJDBC;
@@ -15,12 +16,12 @@ public class loaiBangGiaBoJDBC implements loaiBangGiaBo {
 	}
 	
 	@Override
-	public ArrayList<loaiBangGia> get() {
+	public List<loaiBangGia> get() {
 		return loaiBangGiaDao.get();
 	}
 
 	@Override
-	public ArrayList<loaiBangGia> get(String maBG) {
+	public List<loaiBangGia> get(String maBG) {
 		return loaiBangGiaDao.get(maBG);
 	}
 

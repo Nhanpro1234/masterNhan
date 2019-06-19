@@ -1,36 +1,30 @@
 package cafe.comp;
 
-import java.awt.Dimension;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.SystemColor;
 
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
 
 import com.toedter.calendar.JDateChooser;
 
-import cafe.view._manHinhChinh;
+import cafe.view.ManHinhChinh;
 
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
-import java.awt.Color;
-import javax.swing.UIManager;
-import java.awt.Font;
+public class Head2_macDinh extends JPanel {
 
-public class head2_macDinh extends JPanel {
-
-	private JPanel macDinh;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel macDinh1;
 	private JLabel lblNewLabel;
 	private JPanel macDinh2;
@@ -44,23 +38,21 @@ public class head2_macDinh extends JPanel {
 	private JLabel lblNewLabel_4;
 	private JDateChooser valueNgayDen;
 	private JLabel lblNewLabel_5;
-	private JComboBox valueKhachHang;
+	private JComboBox<Object> valueKhachHang;
 	private JRadioButton valueTiengAnh;
 	private JRadioButton valueTiengViet;
 	private JCheckBox valueXemTruoc;
-	private JComboBox valueBangGia;
-	private JComboBox valueThuNgan;
-	private JComboBox valueNhanVien;
+	private JComboBox<Object> valueBangGia;
+	private JComboBox<Object> valueThuNgan;
+	private JComboBox<Object> valueNhanVien;
 
-	private String user;
 	private JPanel macDinh3_1;
 	private JLabel label;
 	/**
 	 * Create the panel.
 	 */
-	public head2_macDinh(String user, _manHinhChinh _manHinhChinh) {
+	public Head2_macDinh(String user, ManHinhChinh _manHinhChinh) {
 		setBackground(SystemColor.activeCaption);
-		this.user = user;
 		setLayout(new GridLayout(0, 3, 0, 0));
 
 		macDinh1 = new JPanel();
@@ -74,7 +66,7 @@ public class head2_macDinh extends JPanel {
 		macDinh1.add(lblNewLabel);
 		lblNewLabel.setBackground(SystemColor.activeCaption);
 
-		valueBangGia = new JComboBox();
+		valueBangGia = new JComboBox<Object>();
 		macDinh1.add(valueBangGia);
 		valueBangGia.setBackground(Color.WHITE);
 
@@ -83,7 +75,7 @@ public class head2_macDinh extends JPanel {
 		macDinh1.add(lblNewLabel_2);
 		lblNewLabel_2.setBackground(SystemColor.activeCaption);
 
-		valueNhanVien = new JComboBox();
+		valueNhanVien = new JComboBox<Object>();
 		macDinh1.add(valueNhanVien);
 		valueNhanVien.setBackground(Color.WHITE);
 
@@ -92,7 +84,7 @@ public class head2_macDinh extends JPanel {
 		macDinh1.add(lblNewLabel_1);
 		lblNewLabel_1.setBackground(SystemColor.activeCaption);
 
-		valueThuNgan = new JComboBox();
+		valueThuNgan = new JComboBox<Object>();
 		macDinh1.add(valueThuNgan);
 		valueThuNgan.setBackground(Color.WHITE);
 
@@ -135,7 +127,7 @@ public class head2_macDinh extends JPanel {
 		lblNewLabel_5.setBackground(SystemColor.activeCaption);
 		macDinh2_2.add(lblNewLabel_5);
 
-		valueKhachHang = new JComboBox();
+		valueKhachHang = new JComboBox<Object>();
 		valueKhachHang.setBackground(Color.WHITE);
 		macDinh2_2.add(valueKhachHang);
 

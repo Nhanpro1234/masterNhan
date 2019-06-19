@@ -3,15 +3,18 @@ package cafe.comp;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class head extends JPanel {
+public class Head extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton btnHeThong, btnChucNang, btnTroGiup;
 	
-	public head() {
+	public Head() {
 		setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
 		btnHeThong = new JButton("Hệ thống");

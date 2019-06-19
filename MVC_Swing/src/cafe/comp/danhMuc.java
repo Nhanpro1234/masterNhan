@@ -1,45 +1,41 @@
 package cafe.comp;
 
-import javax.swing.JPanel;
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
 import java.awt.BorderLayout;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import cafe.view._manHinhChinh;
-
-import javax.swing.JButton;
-import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
-import java.awt.SystemColor;
-import javax.swing.JSplitPane;
 import java.awt.List;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JCheckBox;
 
-public class danhMuc extends JPanel implements ActionListener, MouseListener {
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+
+import cafe.view.ManHinhChinh;
+
+public class DanhMuc extends JPanel implements ActionListener, MouseListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel danhMuc1;
 	private JPanel danhMuc1_1;
-	private JComboBox<String> timKiemDanhMuc;
 	private JPanel danhMuc1_2;
 	private JSplitPane splitDanhMuc;
-	private DefaultTableModel dm;
 	private List list;
-	private _manHinhChinh _manHinhChinh;
+	private ManHinhChinh _manHinhChinh;
 	
-	private danhMucKhuVuc danhMucKhuVuc;
-	private danhMucSanPhongBan danhMucSanPhongBan;
-	private danhMucLoaiBangGia danhMucLoaiBangGia;
-	private danhMucDonViTinh danhMucDonViTinh;
+	private DanhMucKhuVuc danhMucKhuVuc;
+	private DanhMucSanPhongBan danhMucSanPhongBan;
+	private DanhMucLoaiBangGia danhMucLoaiBangGia;
+	private DanhMucDonViTinh danhMucDonViTinh;
 	
 	/**
 	 * Create the panel.
 	 */
-	public danhMuc(_manHinhChinh _manHinhChinh) {
+	public DanhMuc(ManHinhChinh _manHinhChinh) {
 		this._manHinhChinh = _manHinhChinh;
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
@@ -57,11 +53,6 @@ public class danhMuc extends JPanel implements ActionListener, MouseListener {
 		danhMuc1.add(danhMuc1_1, BorderLayout.NORTH);
 		danhMuc1_1.setLayout(new BoxLayout(danhMuc1_1, BoxLayout.X_AXIS));
 		
-		timKiemDanhMuc = new JComboBox();
-		timKiemDanhMuc.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		timKiemDanhMuc.setModel(new DefaultComboBoxModel(new String[] {"Bàn phòng","Sản phẩm","Bảng giá"}));
-		danhMuc1_1.add(timKiemDanhMuc);
-		
 		danhMuc1_2 = new JPanel();
 		danhMuc1_2.setBackground(SystemColor.inactiveCaption);
 		danhMuc1.add(danhMuc1_2, BorderLayout.CENTER);
@@ -70,18 +61,15 @@ public class danhMuc extends JPanel implements ActionListener, MouseListener {
 		list = new List();
 		list.add("Khu vực");
 		list.add("Bàn phòng");
+		list.add("Loại bảng giá");
+		list.add("Đơn vị tính");
 		list.setFont(new Font("Dialog", Font.PLAIN, 15));
 		danhMuc1_2.add(list);
 		
-		
-		// ándasd
-		
 		list.addMouseListener(this);
-		timKiemDanhMuc.addActionListener(this);
 		
-		/*danhMucKhuVuc = new danhMucKhuVuc(_manHinhChinh);*/
 		splitDanhMuc.setRightComponent(new JPanel());
-		
+		splitDanhMuc.setResizeWeight(0.5);
 	}
 
 	public JSplitPane getSplitDanhMuc() {
@@ -90,27 +78,11 @@ public class danhMuc extends JPanel implements ActionListener, MouseListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == timKiemDanhMuc) {
-			String obj = timKiemDanhMuc.getSelectedItem().toString();
-			if(obj.equals("Bàn phòng")) {
-				list.removeAll();
-				list.add("Khu vực");
-				list.add("Bàn phòng");
-			}
-			
-			if(obj.equals("Bảng giá")) {
-				list.removeAll();
-				list.add("Bảng giá");
-				list.add("Loại bảng giá");
-			}
-			
-			if(obj.equals("Sản phẩm")) {
-				list.removeAll();
-				list.add("Nhóm sản phẩm");
-				list.add("Loại sản phẩm");
-				list.add("Đơn vị tính");
-			}
-		}
+		
+	}
+	
+	public ManHinhChinh get_manHinhChinh() {
+		return _manHinhChinh;
 	}
 
 	@Override
@@ -121,19 +93,19 @@ public class danhMuc extends JPanel implements ActionListener, MouseListener {
 			}
 			
 			if(list.getSelectedItem().equals("Khu vực")) {
-				danhMucKhuVuc = new danhMucKhuVuc(this);
+				danhMucKhuVuc = new DanhMucKhuVuc(this);
 				splitDanhMuc.setRightComponent(danhMucKhuVuc);
 			}
 			if(list.getSelectedItem().equals("Bàn phòng")) {
-				danhMucSanPhongBan = new danhMucSanPhongBan(this);
+				danhMucSanPhongBan = new DanhMucSanPhongBan(this);
 				splitDanhMuc.setRightComponent(danhMucSanPhongBan);
 			}
 			if(list.getSelectedItem().equals("Loại bảng giá")) {
-				danhMucLoaiBangGia = new danhMucLoaiBangGia(this);
+				danhMucLoaiBangGia = new DanhMucLoaiBangGia(this);
 				splitDanhMuc.setRightComponent(danhMucLoaiBangGia);
 			}
 			if(list.getSelectedItem().equals("Đơn vị tính")) {
-				danhMucDonViTinh = new danhMucDonViTinh(this);
+				danhMucDonViTinh = new DanhMucDonViTinh(this);
 				splitDanhMuc.setRightComponent(danhMucDonViTinh);
 			}
 		}
@@ -161,10 +133,6 @@ public class danhMuc extends JPanel implements ActionListener, MouseListener {
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	public _manHinhChinh get_manHinhChinh() {
-		return _manHinhChinh;
 	}
 	
 

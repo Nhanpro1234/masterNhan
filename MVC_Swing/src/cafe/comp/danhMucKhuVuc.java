@@ -1,56 +1,55 @@
 package cafe.comp;
 
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.BoxLayout;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JButton;
-import java.awt.FlowLayout;
-import javax.swing.ImageIcon;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
-import java.awt.event.ActionEvent;
+
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import cafe.view._manHinhChinh;
-
 import cafe.bean.khuVuc;
 import cafe.bo.khuVucBoJDBC;
 
-public class danhMucKhuVuc extends JPanel implements ActionListener, MouseListener {
+public class DanhMucKhuVuc extends JPanel implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel danhMuc2_1;
 	private JPanel danhMuc2_2;
 	private JPanel danhMuc2_1_1;
 	private JPanel danhMuc2_1_2;
 	private JPanel danhMuc2_1_1_1;
 	private JPanel danhMuc2_1_1_2;
-	private JLabel label;
 	private JButton close;
 	private JButton add;
 	private JButton edit;
 	private JButton delete;
 	private JButton reload;
-	private JScrollPane scrollPane;
 	private JTable table;
 	private khuVucBoJDBC khuVucBo;
 	private DefaultTableModel dm;
-	private danhMuc danhMuc;
+	private DanhMuc danhMuc;
 	private JLabel lblNewLabel;
 
 	/**
 	 * Create the panel.
 	 */
-	public danhMucKhuVuc(danhMuc danhMuc) {
+	public DanhMucKhuVuc(DanhMuc danhMuc) {
 		this.danhMuc = danhMuc;
 		setBackground(SystemColor.activeCaption);
 		setLayout(new BorderLayout(0, 0));
@@ -70,7 +69,7 @@ public class danhMucKhuVuc extends JPanel implements ActionListener, MouseListen
 		fl_danhMuc2_1_1_1.setAlignment(FlowLayout.LEFT);
 		danhMuc2_1_1.add(danhMuc2_1_1_1);
 		
-		lblNewLabel = new JLabel("BÀN - PHÒNG");
+		lblNewLabel = new JLabel("Khu vực");
 		danhMuc2_1_1_1.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
@@ -124,13 +123,24 @@ public class danhMucKhuVuc extends JPanel implements ActionListener, MouseListen
 		
 		khuVucBo = new khuVucBoJDBC();
 		
-		dm = new DefaultTableModel();
+		dm = new DefaultTableModel(){
+
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
 		dm.addColumn("Mã khu vực");
 		dm.addColumn("Tên khu vực");
 		loadKhuVuc(dm);
 		table = new JTable(dm);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		table.addMouseListener(this);
 		JScrollPane scrollPane = new JScrollPane(table);
 		danhMuc2_2.add(scrollPane);
 
@@ -154,7 +164,6 @@ public class danhMucKhuVuc extends JPanel implements ActionListener, MouseListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == close) {
-			//danhMuc.getSplitDanhMuc().setRightComponent(new JPanel());
 			danhMuc.get_manHinhChinh().getTabbedPane().remove(danhMuc.get_manHinhChinh().getTabbedPane().getSelectedComponent());
 		}
 		
@@ -204,38 +213,4 @@ public class danhMucKhuVuc extends JPanel implements ActionListener, MouseListen
 			loadKhuVuc(dm);
 		}
 	}
-	
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		if(e.getSource() == table && e.getClickCount() == 2 && !e.isConsumed()) {
-			int row = table.getSelectedRow();
-			
-		}
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

@@ -1,62 +1,58 @@
 package cafe.comp;
 
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JButton;
-import java.awt.FlowLayout;
-import javax.swing.ImageIcon;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
-import java.awt.event.ActionEvent;
+
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
-import cafe.view._manHinhChinh;
-
-import cafe.bean.khuVuc;
 import cafe.bean.loaiBangGia;
-import cafe.bo.khuVucBoJDBC;
 import cafe.bo.loaiBangGiaBo;
 import cafe.bo.loaiBangGiaBoJDBC;
 
-public class danhMucLoaiBangGia extends JPanel implements ActionListener, MouseListener {
+public class DanhMucLoaiBangGia extends JPanel implements ActionListener, MouseListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel danhMuc2_1;
 	private JPanel danhMuc2_2;
 	private JPanel danhMuc2_1_1;
 	private JPanel danhMuc2_1_2;
 	private JPanel danhMuc2_1_1_1;
 	private JPanel danhMuc2_1_1_2;
-	private JLabel label;
 	private JButton close;
 	private JButton add;
 	private JButton edit;
 	private JButton delete;
 	private JButton reload;
-	private JScrollPane scrollPane;
 	private JTable table;
 	private loaiBangGiaBo loaiBangGiaBo;
 	private DefaultTableModel dm;
-	private danhMuc danhMuc;
+	private DanhMuc danhMuc;
 	private JLabel lblNewLabel;
 
 	/**
 	 * Create the panel.
 	 */
-	public danhMucLoaiBangGia(danhMuc danhMuc) {
+	public DanhMucLoaiBangGia(DanhMuc danhMuc) {
 		this.danhMuc = danhMuc;
 		setBackground(SystemColor.activeCaption);
 		setLayout(new BorderLayout(0, 0));
@@ -76,7 +72,7 @@ public class danhMucLoaiBangGia extends JPanel implements ActionListener, MouseL
 		fl_danhMuc2_1_1_1.setAlignment(FlowLayout.LEFT);
 		danhMuc2_1_1.add(danhMuc2_1_1_1);
 		
-		lblNewLabel = new JLabel("BÀN - PHÒNG");
+		lblNewLabel = new JLabel("Loại bảng giá");
 		danhMuc2_1_1_1.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
@@ -129,7 +125,19 @@ public class danhMucLoaiBangGia extends JPanel implements ActionListener, MouseL
 		
 		loaiBangGiaBo = new loaiBangGiaBoJDBC();
 		
-		dm = new DefaultTableModel();
+		dm = new DefaultTableModel(){
+
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
 		dm.addColumn("Mã bảng giá");
 		dm.addColumn("Tên bảng giá");
 		dm.addColumn("Mặc định");
@@ -155,7 +163,6 @@ public class danhMucLoaiBangGia extends JPanel implements ActionListener, MouseL
 			vec.add(data.getMacDinh() == 1 ? "Có" : "Không");
 			dm.addRow(vec);
 		}
-		
 	}
 
 	@Override
@@ -169,7 +176,7 @@ public class danhMucLoaiBangGia extends JPanel implements ActionListener, MouseL
 			int row = table.getSelectedRow();
 			if(row != -1) {
 				String maBG = table.getValueAt(row, 0).toString();
-				new danhMucLoaiBangGia_edit(this, maBG);
+				new DanhMucLoaiBangGia_edit(this, maBG);
 			}else {
 				JOptionPane.showMessageDialog(null, "Bạn chưa chọn hàng nào", "Lỗi", JOptionPane.ERROR_MESSAGE);
 			}
@@ -180,7 +187,7 @@ public class danhMucLoaiBangGia extends JPanel implements ActionListener, MouseL
 		}
 		
 		if(e.getSource() == add) {
-			new danhMucLoaiBangGia_add(this);
+			new DanhMucLoaiBangGia_add(this);
 		}
 		
 		if(e.getSource() == delete) {

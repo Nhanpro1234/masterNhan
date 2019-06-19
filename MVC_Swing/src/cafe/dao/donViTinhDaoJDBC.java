@@ -30,7 +30,7 @@ public class donViTinhDaoJDBC implements donViTinhDao{
 			}
 			return ress;
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		} finally {
 			dataBase.disconect(conn);
 		}
@@ -58,7 +58,7 @@ public class donViTinhDaoJDBC implements donViTinhDao{
 			}
 			return ress;
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		} finally {
 			dataBase.disconect(conn);
 		}
@@ -81,7 +81,7 @@ public class donViTinhDaoJDBC implements donViTinhDao{
 				return true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return false;
 		} finally {
 			dataBase.disconect(conn);
@@ -110,7 +110,7 @@ public class donViTinhDaoJDBC implements donViTinhDao{
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		} finally {
 			dataBase.disconect(conn);
@@ -142,7 +142,7 @@ public class donViTinhDaoJDBC implements donViTinhDao{
 				return "Cập nhật thành công";
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		}finally {
 			dataBase.disconect(conn);
@@ -172,7 +172,7 @@ public class donViTinhDaoJDBC implements donViTinhDao{
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		} finally {
 			dataBase.disconect(conn);

@@ -1,30 +1,31 @@
 package cafe.comp;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.awt.Font;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.border.EmptyBorder;
+
 import cafe.bean.loaiNhomHang;
 import cafe.bean.nhomHang;
 import cafe.bo.nhomHangBo;
 import cafe.bo.nhomHangBoJDBC;
 
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.awt.event.ActionEvent;
+public class NhomHang_edit extends JFrame implements ActionListener {
 
-public class nhomHang_edit extends JFrame implements ActionListener {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lblTnMi;
 	private JTextField tenNhom;
@@ -34,7 +35,7 @@ public class nhomHang_edit extends JFrame implements ActionListener {
 	private JButton saveClose;
 	private JButton close;
 
-	private sanPham sanPham;
+	private SanPham sanPham;
 	private nhomHangBo nhomHangBo = new nhomHangBoJDBC();
 	private String maNhom;
 	private String maCha;
@@ -42,7 +43,7 @@ public class nhomHang_edit extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public nhomHang_edit(sanPham sanPham) {
+	public NhomHang_edit(SanPham sanPham) {
 		this.sanPham = sanPham;
 		setTitle("Sửa nhóm");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

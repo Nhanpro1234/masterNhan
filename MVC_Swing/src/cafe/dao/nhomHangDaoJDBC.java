@@ -29,7 +29,6 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 			}
 			return ress;
 		} catch (Exception e) {
-			e.printStackTrace();
 		} finally {
 			dataBase.disconect(conn);
 		}
@@ -57,7 +56,7 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 			}
 			return ress;
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		} finally {
 			dataBase.disconect(conn);
 		}
@@ -86,7 +85,6 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
 			return "Lỗi exception";
 		} finally {
 			dataBase.disconect(conn);
@@ -120,7 +118,6 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 				return "Cập nhật thành công";
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			return "Lỗi exception";
 		}finally {
 			dataBase.disconect(conn);
@@ -150,7 +147,7 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		} finally {
 			dataBase.disconect(conn);
@@ -174,7 +171,6 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 				return true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			return false;
 		} finally {
 			dataBase.disconect(conn);
@@ -200,12 +196,39 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
 			return "Lỗi exception";
 		} finally {
 			dataBase.disconect(conn);
 		}
 		return "Xóa thất bại";
+	}
+
+	@Override
+	public boolean isMaCha(String maCha) {
+		dataBase dataBase = new dataBase();
+		Connection conn = dataBase.conn();
+		if(conn == null){
+			return false;
+		}
+		String sql = "SELECT * FROM `nhom_hang` Where `maCha` = ?";
+		try {
+			PreparedStatement s = conn.prepareStatement(sql);
+			s.setString(1, maCha);
+			ResultSet result = s.executeQuery();
+			if(result.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			return false;
+		} finally {
+			dataBase.disconect(conn);
+		}
+		return false;
+	}
+	
+	public static void main(String[] args) {
+		nhomHangDaoJDBC c = new nhomHangDaoJDBC();
+		System.err.println(c.isMaCha("MH_12"));
 	}
 
 }

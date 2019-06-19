@@ -56,4 +56,10 @@ public class nhomHangBoJDBC implements nhomHangBo {
 		return nhomHangDao.deleteByMaCha(maCha);
 	}
 
+	@Override
+	public boolean isMaCha(String maCha) {
+		// TODO Auto-generated method stub
+		return nhomHangDao.isMaCha(maCha);
+	}
+
 }

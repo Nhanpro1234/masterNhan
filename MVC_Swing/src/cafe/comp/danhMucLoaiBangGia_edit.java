@@ -1,46 +1,34 @@
 package cafe.comp;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Collections;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.JComboBox;
-import java.awt.FlowLayout;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import cafe.bean.khuVuc;
 import cafe.bean.loaiBangGia;
-import cafe.bean.sanPhongBan;
-import cafe.bo.khuVucBo;
-import cafe.bo.khuVucBoJDBC;
 import cafe.bo.loaiBangGiaBo;
 import cafe.bo.loaiBangGiaBoJDBC;
-import cafe.bo.sanPhongBanBo;
-import cafe.bo.sanPhongBanBoJDBC;
 
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.ImageIcon;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JCheckBox;
+public class DanhMucLoaiBangGia_edit extends JFrame implements ActionListener, ItemListener {
 
-public class danhMucLoaiBangGia_edit extends JFrame implements ActionListener, ItemListener {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel banPhong;
 	private JPanel banPhong2;
@@ -51,7 +39,7 @@ public class danhMucLoaiBangGia_edit extends JFrame implements ActionListener, I
 	private JLabel lblMBnMi;
 	private JTextField valueMaBG;
 	
-	private danhMucLoaiBangGia danhMucLoaiBangGia;
+	private DanhMucLoaiBangGia danhMucLoaiBangGia;
 	private loaiBangGiaBo loaiBangGiaBo = new loaiBangGiaBoJDBC(); 
 	private JCheckBox valueMacDinh;
 	private JTextField valueTenBG;
@@ -59,7 +47,7 @@ public class danhMucLoaiBangGia_edit extends JFrame implements ActionListener, I
 	/**
 	 * Create the frame.
 	 */
-	public danhMucLoaiBangGia_edit(danhMucLoaiBangGia danhMucLoaiBangGia, String maBG) {
+	public DanhMucLoaiBangGia_edit(DanhMucLoaiBangGia danhMucLoaiBangGia, String maBG) {
 		this.danhMucLoaiBangGia = danhMucLoaiBangGia;
 		
 		setTitle("Bảng giá");
@@ -129,7 +117,7 @@ public class danhMucLoaiBangGia_edit extends JFrame implements ActionListener, I
 		panel_2.add(close);
 		
 		
-		loadAll();
+		load();
 		
 		
 		close.addActionListener(this);
@@ -141,7 +129,10 @@ public class danhMucLoaiBangGia_edit extends JFrame implements ActionListener, I
 		valueMacDinh.addItemListener(this);
 	}
 	
-	public void loadAll() {
+	/**
+	 * Hàm dùng để đông bộ
+	 */
+	public void load() {
 		List<loaiBangGia> resultt = loaiBangGiaBo.get(valueMaBG.getText());
 		
 		valueMacDinh.setSelected(resultt.get(0).getMacDinh() == 1 ? true : false);
@@ -163,7 +154,7 @@ public class danhMucLoaiBangGia_edit extends JFrame implements ActionListener, I
 		}
 		
 		danhMucLoaiBangGia.load_add();
-		loadAll();
+		load();
 	}
 	
 	public void update() {

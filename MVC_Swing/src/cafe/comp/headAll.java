@@ -7,31 +7,35 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import cafe.view._manHinhChinh;
+import cafe.view.ManHinhChinh;
 
-public class headAll extends JPanel implements ActionListener{
+public class HeadAll extends JPanel implements ActionListener{
 
-	private head head;
-	private head2 head2;
-	private head2_macDinh head2_macDinh;
-	private head2_chucNang head2_chucNang;
-	private head2_heThong head2_heThong;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Head head;
+	private Head2 head2;
+	private Head2_macDinh head2_macDinh;
+	private Head2_chucNang head2_chucNang;
+	private Head2_heThong head2_heThong;
 	
 	final static String MD = "md";
 	final static String CN = "cn";
 	final static String HT = "ht";
 	
-	public headAll(String user, _manHinhChinh _manHinhChinh) {
+	public HeadAll(String user, ManHinhChinh _manHinhChinh) {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		head = new head();
-		head2 = new head2();
+		head = new Head();
+		head2 = new Head2();
 		add(head);
 		add(head2);
 		
-		head2_macDinh = new head2_macDinh(user, _manHinhChinh);
-		head2_chucNang = new head2_chucNang(user, _manHinhChinh);
-		head2_heThong = new head2_heThong(user, _manHinhChinh);
+		head2_macDinh = new Head2_macDinh(user, _manHinhChinh);
+		head2_chucNang = new Head2_chucNang(user, _manHinhChinh);
+		head2_heThong = new Head2_heThong(user, _manHinhChinh);
 		
 		head2.add(head2_macDinh, MD);
 		head2.add(head2_chucNang, CN);

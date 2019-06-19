@@ -7,13 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import cafe.bean.khuVuc;
 import cafe.bean.loaiBangGia;
 
 public class loaiBangGiaDaoJDBC implements loaiBangGiaDao {
 	@Override
-	public ArrayList<loaiBangGia> get() {
-		ArrayList<loaiBangGia> ress = new ArrayList<>();
+	public List<loaiBangGia> get() {
+		List<loaiBangGia> ress = new ArrayList<>();
 
 		dataBase dataBase = new dataBase();
 		Connection conn = dataBase.conn();
@@ -29,9 +28,11 @@ public class loaiBangGiaDaoJDBC implements loaiBangGiaDao {
 			while(r.next()) {
 				ress.add(new loaiBangGia(r.getString("maBG"), r.getString("tenBG"), r.getInt("macDinh")));
 			}
+			Collections.sort(ress, new loaiBangGia());
+			
 			return ress;
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		} finally {
 			dataBase.disconect(conn);
 		}
@@ -39,8 +40,8 @@ public class loaiBangGiaDaoJDBC implements loaiBangGiaDao {
 	}
 
 	@Override
-	public ArrayList<loaiBangGia> get(String maBG) {
-		ArrayList<loaiBangGia> ress = new ArrayList<>();
+	public List<loaiBangGia> get(String maBG) {
+		List<loaiBangGia> ress = new ArrayList<>();
 
 		dataBase dataBase = new dataBase();
 		Connection conn = dataBase.conn();
@@ -59,7 +60,7 @@ public class loaiBangGiaDaoJDBC implements loaiBangGiaDao {
 			}
 			return ress;
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		} finally {
 			dataBase.disconect(conn);
 		}
@@ -87,7 +88,7 @@ public class loaiBangGiaDaoJDBC implements loaiBangGiaDao {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		} finally {
 			dataBase.disconect(conn);
@@ -119,7 +120,7 @@ public class loaiBangGiaDaoJDBC implements loaiBangGiaDao {
 				return "Cập nhật thành công";
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		}finally {
 			dataBase.disconect(conn);
@@ -149,7 +150,7 @@ public class loaiBangGiaDaoJDBC implements loaiBangGiaDao {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		} finally {
 			dataBase.disconect(conn);
@@ -181,7 +182,7 @@ public class loaiBangGiaDaoJDBC implements loaiBangGiaDao {
 				return true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return false;
 		} finally {
 			dataBase.disconect(conn);

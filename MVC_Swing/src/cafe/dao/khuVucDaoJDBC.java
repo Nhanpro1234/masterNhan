@@ -8,8 +8,6 @@ import java.util.Collections;
 import java.util.List;
 
 import cafe.bean.khuVuc;
-import cafe.bean.nhanVien;
-import cafe.bean.sanPhongBan;
 
 public class khuVucDaoJDBC implements khuVucDao {
 
@@ -33,7 +31,7 @@ public class khuVucDaoJDBC implements khuVucDao {
 			}
 			return ress;
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		} finally {
 			dataBase.disconect(conn);
 		}
@@ -62,7 +60,7 @@ public class khuVucDaoJDBC implements khuVucDao {
 			}
 			return ress;
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		} finally {
 			dataBase.disconect(conn);
 		}
@@ -89,7 +87,7 @@ public class khuVucDaoJDBC implements khuVucDao {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return false;
 		} finally {
 			dataBase.disconect(conn);
@@ -119,7 +117,7 @@ public class khuVucDaoJDBC implements khuVucDao {
 				return "Cập nhật thành công";
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		}finally {
 			dataBase.disconect(conn);
@@ -149,7 +147,7 @@ public class khuVucDaoJDBC implements khuVucDao {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		} finally {
 			dataBase.disconect(conn);
@@ -181,7 +179,7 @@ public class khuVucDaoJDBC implements khuVucDao {
 				return true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return false;
 		} finally {
 			dataBase.disconect(conn);

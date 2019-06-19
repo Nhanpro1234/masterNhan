@@ -1,13 +1,5 @@
 package cafe.comp;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,16 +8,27 @@ import java.awt.event.KeyListener;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.JComboBox;
-import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
 import cafe.bean.loaiNhomHang;
 import cafe.bean.nhomHang;
 import cafe.bo.nhomHangBo;
 import cafe.bo.nhomHangBoJDBC;
 
-public class nhomHang_add extends JFrame implements ActionListener, KeyListener {
+public class NhomHang_add extends JFrame implements ActionListener, KeyListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lblNewLabel;
 	private JTextField tenNhom;
@@ -33,20 +36,16 @@ public class nhomHang_add extends JFrame implements ActionListener, KeyListener 
 	private JComboBox<String> loaiNhom;
 	private JButton close;
 	private JButton saveClose;
-	
-	private nhomHangBo nhomHangBo = new nhomHangBoJDBC();
-	private sanPham sanPham;
+	private SanPham sanPham;
 	private JButton save;
-	
-	private String maNhomNew;
 	private JTextField path;
-	
 	private String maCha;
+	private nhomHangBo nhomHangBo = new nhomHangBoJDBC();
 
 	/**
 	 * Create the frame.
 	 */
-	public nhomHang_add(sanPham sanPham) {
+	public NhomHang_add(SanPham sanPham) {
 		this.sanPham = sanPham;
 		setTitle("Nhóm dữ liệu");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -120,12 +119,11 @@ public class nhomHang_add extends JFrame implements ActionListener, KeyListener 
 		}
 		
 		if(e.getSource() == saveClose) {
-			run();
-			this.dispose();
+			add(1);
 		}
 		
 		if(e.getSource() == save) {
-			run();
+			add(0);
 		}
 	}
 
@@ -137,7 +135,7 @@ public class nhomHang_add extends JFrame implements ActionListener, KeyListener 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-			run();
+			add(0);
 		}
 	}
 
@@ -146,7 +144,11 @@ public class nhomHang_add extends JFrame implements ActionListener, KeyListener 
 		
 	}
 	
-	public void run() {
+	/**
+	 * Hàm dùng để thêm nhóm
+	 * @param type = 0 thoát + save, = 1 chỉ save
+	 */
+	public void add(int type) {
 		if(path.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "Lỗi đầu vào");
 			return;
@@ -170,8 +172,15 @@ public class nhomHang_add extends JFrame implements ActionListener, KeyListener 
 		JOptionPane.showMessageDialog(null, msg);
 		
 		sanPham.loadTree();
+		
+		if(type == 1) {
+			this.dispose();
+		}
 	}
 	
+	/**
+	 * Dòng để đồng bộ và lấy đường dẫn của mã nhóm làm mã cha của nhón đó
+	 */
 	public void load() {
 		String data = sanPham.getTree().getSelectionPath().getLastPathComponent().toString();
 		path.setText(data);

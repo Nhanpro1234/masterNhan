@@ -1,24 +1,22 @@
 package cafe.comp;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.JComboBox;
-import java.awt.FlowLayout;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import cafe.bean.khuVuc;
@@ -31,13 +29,12 @@ import cafe.bo.loaiBangGiaBoJDBC;
 import cafe.bo.sanPhongBanBo;
 import cafe.bo.sanPhongBanBoJDBC;
 
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.ImageIcon;
-import javax.swing.DefaultComboBoxModel;
+public class DanhMucSanPhongBan_edit extends JFrame implements ActionListener{
 
-public class danhMucSanPhongBan_edit extends JFrame implements ActionListener{
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel banPhong;
 	private JPanel banPhong2;
@@ -54,14 +51,14 @@ public class danhMucSanPhongBan_edit extends JFrame implements ActionListener{
 	private JButton addBangGia;
 	private sanPhongBanBo sanPhongBanBo = new sanPhongBanBoJDBC();
 	private khuVucBo khuVucBo = new khuVucBoJDBC();
-	private danhMucSanPhongBan danhMucSanPhongBan;
+	private DanhMucSanPhongBan danhMucSanPhongBan;
 	private loaiBangGiaBo loaiBangGiaBo = new loaiBangGiaBoJDBC(); 
 	private String maSPB;
 
 	/**
 	 * Create the frame.
 	 */
-	public danhMucSanPhongBan_edit(danhMucSanPhongBan danhMucSanPhongBan, String maSPB) {
+	public DanhMucSanPhongBan_edit(DanhMucSanPhongBan danhMucSanPhongBan, String maSPB) {
 		this.maSPB = maSPB;
 		this.danhMucSanPhongBan = danhMucSanPhongBan;
 		
@@ -147,7 +144,7 @@ public class danhMucSanPhongBan_edit extends JFrame implements ActionListener{
 		panel_2.add(close);
 		
 		
-		loadAll();
+		load();
 		
 		
 		close.addActionListener(this);
@@ -159,7 +156,10 @@ public class danhMucSanPhongBan_edit extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 	
-	public void loadAll() {
+	/**
+	 * Hàm dùng để đồng bộ lại dữ liệu
+	 */
+	public void load() {
 		List<sanPhongBan> dataR = sanPhongBanBo.get(this.maSPB);
 		
 		String[] BS = dataR.get(0).getSoBan().split("_"); 
@@ -201,9 +201,12 @@ public class danhMucSanPhongBan_edit extends JFrame implements ActionListener{
 			danhMucSanPhongBan.load_add();
 		}
 		
-		loadAll();
+		load();
 	}
 	
+	/**
+	 * Hàm dùng để chỉnh sửa phòng bàn @@
+	 */
 	public void edit() {
 		if(valueSoBan.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "Bạn nhập thiếu dữ liệu", "Cảnh báo", JOptionPane.WARNING_MESSAGE);

@@ -1,23 +1,22 @@
 package cafe.comp;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.SystemColor;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import cafe.view._dangNhap;
-import java.awt.FlowLayout;
+public class Footer extends JPanel {
 
-public class footer extends JPanel {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel textUserUse;
 	private JLabel valueUserUse;
 	private JLabel valueThoiGian;
@@ -28,7 +27,7 @@ public class footer extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public footer(String user) {
+	public Footer(String user) {
 		setBackground(new Color(135, 206, 250));
 		in(user);
 	}

@@ -1,140 +1,145 @@
 package cafe.comp;
 
-import javax.swing.JPanel;
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
 import java.awt.BorderLayout;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Collections;
+import java.util.List;
+
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.JTextField;
+import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
 
 import cafe.bean.nhomHang;
 import cafe.bo.nhomHangBo;
 import cafe.bo.nhomHangBoJDBC;
-import cafe.view._manHinhChinh;
+import cafe.view.ManHinhChinh;
 
-import javax.swing.JButton;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.Font;
-import java.awt.SystemColor;
-import javax.swing.JSplitPane;
-import java.util.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import javax.swing.JCheckBox;
-import javax.swing.JTree;
-import java.awt.FlowLayout;
-import java.awt.Color;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
-public class sanPham extends JPanel implements ActionListener, MouseListener {
+public class SanPham extends JPanel implements ActionListener, MouseListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel sanPham1;
 	private JSplitPane splitSanPham;
-	private DefaultTableModel dm;
-	private _manHinhChinh _manHinhChinh;
-	
+	private ManHinhChinh _manHinhChinh;
 	private JPanel sanPham2;
 	private JTree tree;
-	private JTable table;
 	private nhomHangBo nhomHangBo; 
-
 	private DefaultMutableTreeNode root;
 	private DefaultTreeModel model;
-	private JPanel panel;
+	private JPanel sanPham2_2;
 	private JTextField valuePath;
-	
 	private DefaultMutableTreeNode DefaultMutableTreeNode;
+
 	/**
 	 * Create the panel.
 	 */
-	
-	public sanPham(_manHinhChinh _manHinhChinh) {
+
+	public SanPham(ManHinhChinh _manHinhChinh) {
 		this._manHinhChinh = _manHinhChinh;
 		setLayout(new BorderLayout(0, 0));
-		
-		add(new sanPhamHead(this), BorderLayout.NORTH); // north
-		
+
+		add(new SanPhamHead(this), BorderLayout.NORTH); // north
+
 		splitSanPham = new JSplitPane();
 		splitSanPham.setDividerLocation(250);
 		add(splitSanPham, BorderLayout.CENTER);
-		
 
-		
-		
 		sanPham1 = new JPanel();
 		sanPham1.setBackground(Color.WHITE);
 		sanPham1.setLayout(new BorderLayout(0, 0));
-		
+
 		nhomHangBo = new nhomHangBoJDBC();
-		
+
 		root = new DefaultMutableTreeNode("Hàng hóa sản phẩm dịch vụ");
 		tree = new JTree(root);
+		tree.addMouseListener(this);
 		model = (DefaultTreeModel) tree.getModel();
 		loadTree();
-		tree.addMouseListener(this);
-		
+
 		sanPham1.add(tree, BorderLayout.NORTH);
-		
+
 		sanPham2 = new JPanel();
 		sanPham2.setLayout(new BorderLayout(0, 0));
-		
-		panel = new JPanel();
-		sanPham2.add(panel, BorderLayout.NORTH);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		
+
+		sanPham2_2 = new JPanel();
+		sanPham2.add(sanPham2_2, BorderLayout.NORTH);
+		sanPham2_2.setLayout(new BoxLayout(sanPham2_2, BoxLayout.X_AXIS));
+
 		valuePath = new JTextField();
 		valuePath.setEditable(false);
-		valuePath.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel.add(valuePath);
+		valuePath.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		sanPham2_2.add(valuePath);
 		valuePath.setColumns(10);
-		
-		table = new JTable();
-		sanPham2.add(table, BorderLayout.CENTER);
 
 		splitSanPham.setLeftComponent(sanPham1);
-		splitSanPham.setRightComponent(sanPham2);
-		
+		splitSanPham.setRightComponent(new JPanel());
+
 	}
-	
+
+	/**
+	 * Hàm này dùng để đồng bộ lại dữ liệu mới khi có sự thêm nhóm hay bất kỳ điều gì đó
+	 */
 	public void loadTree() {
 		delTree();
-		
+
 		deQui(DefaultMutableTreeNode, null);
-		
+
 		for (int i = 0; i < tree.getRowCount(); i++) {
 			tree.expandRow(i);
 		}
 	}
-	
-	private void deQui(DefaultMutableTreeNode oke, String maNhom) {
+
+	/**
+	 * Hàm này được dùng để tạo ra cây thư mục
+	 * @param defaultMutableTreeNode là cái thêm vào thư mục
+	 * @param maNhom mặc định lúc đầu đưa vô là null và điều kiện là null để tránh chạy vô tận @@
+	 * nếu không là null thì lần sau thì nó sẽ gọi lại mã nhóm
+	 * thì nó sẽ chạy lại if đầu mà không chạy ra cái if thứ 2
+	 */
+	private void deQui(DefaultMutableTreeNode defaultMutableTreeNode, String maNhom) {
 		List<nhomHang> dataNH = nhomHangBo.get();
 		Collections.sort(dataNH, new nhomHang());
-		
+
 		for(nhomHang data : dataNH) {
 			if(maNhom == null && data.getMaCha() == null) {
-				oke = new DefaultMutableTreeNode(data.getMaNhom()+": "+data.getTenNhom());
-				root.add(oke);
-				deQui(oke, data.getMaNhom());
+				defaultMutableTreeNode = new DefaultMutableTreeNode(data.getMaNhom()+": "+data.getTenNhom());
+				root.add(defaultMutableTreeNode);
+				deQui(defaultMutableTreeNode, data.getMaNhom());
 			}
-			
+
 			if(data.getMaCha() != null) {
 				if(data.getMaCha().equals(maNhom)) {
 					DefaultMutableTreeNode oke2 = new DefaultMutableTreeNode(data.getMaNhom()+": "+data.getTenNhom());
-					oke.add(oke2);
+					defaultMutableTreeNode.add(oke2);
 					deQui(oke2, data.getMaNhom());
 				}
 			}
 		}
 	}
-	
+
+	/**
+	 * Hàm này dùng để lấy đường dẫn tới cái nhóm đó
+	 */
+	public void getPathTree() {
+		if(tree.getSelectionPath() != null) {
+			String data = tree.getSelectionPath().getLastPathComponent().toString();
+			splitSanPham.setRightComponent(new SanPhamTable(this, data, tree.getSelectionPath().toString().replaceAll(",", " /")));
+		}
+	}
+
+	/**
+	 * Hàm này dùng để xóa tất Children trong Jtree
+	 */
 	public void delTree() {
 		root.removeAllChildren();
 		model.reload();
@@ -146,46 +151,42 @@ public class sanPham extends JPanel implements ActionListener, MouseListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getSource() == tree) {
-			try {
-				String data = tree.getSelectionPath().getLastPathComponent().toString();
-				valuePath.setText(tree.getSelectionPath().toString().replaceAll(",", " /"));
-				JOptionPane.showMessageDialog(null, data);
-			} catch (Exception e2) {
-				
-			}
+			getPathTree();
 		}
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	public _manHinhChinh get_manHinhChinh() {
+
+	public ManHinhChinh get_manHinhChinh() {
 		return _manHinhChinh;
 	}
 
@@ -200,6 +201,5 @@ public class sanPham extends JPanel implements ActionListener, MouseListener {
 	public DefaultTreeModel getModel() {
 		return model;
 	}
-	
-	
+
 }

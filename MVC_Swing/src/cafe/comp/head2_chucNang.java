@@ -1,24 +1,26 @@
 package cafe.comp;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.SystemColor;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import cafe.view._manHinhChinh;
+import cafe.view.ManHinhChinh;
 
-import java.awt.Color;
+public class Head2_chucNang extends JPanel {
 
-public class head2_chucNang extends JPanel {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton btnMauIn,btnMayIn,btnSoDo,btnDatBan,btnDoanhThu,btnThuChi,btnPhieuThu,btnPhieuChi,btnHoaDon;
 	public String user;
 
-	public head2_chucNang(String user, _manHinhChinh _manHinhChinh) {
+	public Head2_chucNang(String user, ManHinhChinh _manHinhChinh) {
 		setBackground(SystemColor.activeCaption);
 		setBounds(0, 47, 1360, 106);
 		this.user = user;

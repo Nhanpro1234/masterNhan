@@ -3,7 +3,6 @@ package cafe.dao;
 import java.util.ArrayList;
 
 import cafe.bean.khuVuc;
-import cafe.bean.sanPhongBan;
 
 public interface khuVucDao {
 	public ArrayList<khuVuc> getByAll();

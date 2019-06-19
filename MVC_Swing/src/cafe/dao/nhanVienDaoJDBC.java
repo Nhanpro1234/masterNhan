@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import cafe.bean.loaiBangGia;
 import cafe.bean.nhanVien;
 
 
@@ -38,7 +37,7 @@ public class nhanVienDaoJDBC implements nhanVienDao {
 			}
 			return ress;
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		} finally {
 			dataBase.disconect(conn);
 		}
@@ -70,7 +69,7 @@ public class nhanVienDaoJDBC implements nhanVienDao {
 			}
 			return ress;
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		} finally {
 			dataBase.disconect(conn);
 		}
@@ -103,7 +102,7 @@ public class nhanVienDaoJDBC implements nhanVienDao {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		} finally {
 			dataBase.disconect(conn);
@@ -144,7 +143,7 @@ public class nhanVienDaoJDBC implements nhanVienDao {
 				return "Cập nhật thành công";
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		}finally {
 			dataBase.disconect(conn);
@@ -174,7 +173,7 @@ public class nhanVienDaoJDBC implements nhanVienDao {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		} finally {
 			dataBase.disconect(conn);
@@ -206,7 +205,7 @@ public class nhanVienDaoJDBC implements nhanVienDao {
 				return true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return false;
 		} finally {
 			dataBase.disconect(conn);

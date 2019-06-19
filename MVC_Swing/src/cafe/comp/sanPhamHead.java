@@ -1,6 +1,5 @@
 package cafe.comp;
 
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -15,7 +14,7 @@ import javax.swing.JPanel;
 import cafe.bo.nhomHangBo;
 import cafe.bo.nhomHangBoJDBC;
 
-public class sanPhamHead extends JPanel implements ActionListener {
+public class SanPhamHead extends JPanel implements ActionListener {
 	/**
 	 * 
 	 */
@@ -29,12 +28,12 @@ public class sanPhamHead extends JPanel implements ActionListener {
 	private JButton chuyenSP;
 	private JButton xoaSP;
 	
-	private sanPham sanPham;
+	private SanPham sanPham;
 	private JButton dongBo;
 	
 	private nhomHangBo nhomHangBo = new nhomHangBoJDBC();;
 	
-	public sanPhamHead(sanPham sanPham) {
+	public SanPhamHead(SanPham sanPham) {
 		this.sanPham = sanPham;
 		
 		FlowLayout fl_headSP = (FlowLayout) getLayout();
@@ -98,8 +97,8 @@ public class sanPhamHead extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == addNhom) {
 			try {
-				String data = sanPham.getTree().getSelectionPath().getLastPathComponent().toString();
-				nhomHang_add nhomHang_add = new nhomHang_add(sanPham);
+				//String data = sanPham.getTree().getSelectionPath().getLastPathComponent().toString();
+				NhomHang_add nhomHang_add = new NhomHang_add(sanPham);
 				nhomHang_add.setVisible(true);
 			} catch (Exception e2) {
 				JOptionPane.showMessageDialog(null, "Bạn chưa chọn cột nào để thêm vào");
@@ -111,6 +110,10 @@ public class sanPhamHead extends JPanel implements ActionListener {
 		}
 		
 		if(e.getSource() == delete) {
+			if(sanPham.getTree().getSelectionPath() == null) {
+				return;
+			}
+			
 			String[] data = sanPham.getTree().getSelectionPath().getLastPathComponent().toString().split(":");
 			nhomHangBo.deleteByMaCha(data[0]);
 			JOptionPane.showMessageDialog(null, nhomHangBo.delete(data[0]));
@@ -118,14 +121,13 @@ public class sanPhamHead extends JPanel implements ActionListener {
 		}
 		
 		if(e.getSource() == editNhom) {
-			nhomHang_edit nhomHang_edit = new nhomHang_edit(sanPham);
+			if(sanPham.getTree().getSelectionPath() == null) {
+				return;
+			}
+			
+			NhomHang_edit nhomHang_edit = new NhomHang_edit(sanPham);
 			nhomHang_edit.setVisible(true);
 		}
 	}
-	
-	
-	
-	
-	
 
 }

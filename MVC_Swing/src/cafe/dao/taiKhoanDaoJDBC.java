@@ -29,7 +29,7 @@ public class taiKhoanDaoJDBC implements taiKhoanDao{
 			}
 			return ress;
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		} finally {
 			dataBase.disconect(conn);
 		}
@@ -58,7 +58,7 @@ public class taiKhoanDaoJDBC implements taiKhoanDao{
 			}
 			return ress;
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		} finally {
 			dataBase.disconect(conn);
 		}
@@ -86,7 +86,7 @@ public class taiKhoanDaoJDBC implements taiKhoanDao{
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		} finally {
 			dataBase.disconect(conn);
@@ -117,7 +117,7 @@ public class taiKhoanDaoJDBC implements taiKhoanDao{
 				return "Cập nhật thành công";
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		}finally {
 			dataBase.disconect(conn);
@@ -147,7 +147,7 @@ public class taiKhoanDaoJDBC implements taiKhoanDao{
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "Lỗi exception";
 		} finally {
 			dataBase.disconect(conn);
@@ -171,7 +171,7 @@ public class taiKhoanDaoJDBC implements taiKhoanDao{
 				return true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return false;
 		} finally {
 			dataBase.disconect(conn);
@@ -197,7 +197,7 @@ public class taiKhoanDaoJDBC implements taiKhoanDao{
 				return true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return false;
 		} finally {
 			dataBase.disconect(conn);

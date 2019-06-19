@@ -4,12 +4,14 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
-public class head2 extends JPanel {
+public class Head2 extends JPanel {
 
-	private JPanel mainCha;
-	
-	
-	public head2() {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public Head2() {
 		setLayout(new CardLayout());
 	}
 

@@ -12,5 +12,6 @@ public interface nhomHangDao {
 	public String update(nhomHang nhomHang);
 	public String delete(String maNH);
 	public boolean isMaNH(String maNH);
+	public boolean isMaCha(String maCha);
 	public String deleteByMaCha(String maCha);
 }

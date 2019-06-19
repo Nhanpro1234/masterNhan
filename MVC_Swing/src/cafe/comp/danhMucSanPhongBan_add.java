@@ -1,24 +1,22 @@
 package cafe.comp;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.JComboBox;
-import java.awt.FlowLayout;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import cafe.bean.khuVuc;
@@ -31,13 +29,12 @@ import cafe.bo.loaiBangGiaBoJDBC;
 import cafe.bo.sanPhongBanBo;
 import cafe.bo.sanPhongBanBoJDBC;
 
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.ImageIcon;
-import javax.swing.DefaultComboBoxModel;
+public class DanhMucSanPhongBan_add extends JFrame implements ActionListener{
 
-public class danhMucSanPhongBan_add extends JFrame implements ActionListener{
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel banPhong;
 	private JPanel banPhong2;
@@ -45,22 +42,22 @@ public class danhMucSanPhongBan_add extends JFrame implements ActionListener{
 	private JButton close;
 	private JButton saveClose;
 	private JButton save;
-	private JComboBox valueKhuVuc;
+	private JComboBox<String> valueKhuVuc;
 	private JLabel lblBngGi;
-	private JComboBox valueBangGia;
+	private JComboBox<String> valueBangGia;
 	private JLabel lblMBnMi;
 	private JTextField valueSoBan;
 	private JButton addKhuVuc;
 	private JButton addBangGia;
 	private sanPhongBanBo sanPhongBanBo = new sanPhongBanBoJDBC();
 	private khuVucBo khuVucBo = new khuVucBoJDBC();
-	private danhMucSanPhongBan danhMucSanPhongBan;
+	private DanhMucSanPhongBan danhMucSanPhongBan;
 	private loaiBangGiaBo loaiBangGiaBo = new loaiBangGiaBoJDBC(); 
 
 	/**
 	 * Create the frame.
 	 */
-	public danhMucSanPhongBan_add(danhMucSanPhongBan danhMucSanPhongBan) {
+	public DanhMucSanPhongBan_add(DanhMucSanPhongBan danhMucSanPhongBan) {
 		this.danhMucSanPhongBan = danhMucSanPhongBan;
 		
 		setTitle("Bàn phòng");
@@ -87,7 +84,7 @@ public class danhMucSanPhongBan_add extends JFrame implements ActionListener{
 		lblNewLabel.setBounds(10, 66, 113, 27);
 		banPhong2.add(lblNewLabel);
 		
-		valueKhuVuc = new JComboBox();
+		valueKhuVuc = new JComboBox<String>();
 		valueKhuVuc.setFont(new Font("Dialog", Font.PLAIN, 15));
 		valueKhuVuc.setBounds(133, 66, 248, 27);
 		banPhong2.add(valueKhuVuc);
@@ -97,7 +94,7 @@ public class danhMucSanPhongBan_add extends JFrame implements ActionListener{
 		lblBngGi.setBounds(10, 105, 113, 27);
 		banPhong2.add(lblBngGi);
 		
-		valueBangGia = new JComboBox();
+		valueBangGia = new JComboBox<String>();
 		valueBangGia.addItem("BG_1: Bảng giá ngoài trời");
 		valueBangGia.addItem("BG_2: Bảng giá trong nhà");
 		valueBangGia.setFont(new Font("Dialog", Font.PLAIN, 15));

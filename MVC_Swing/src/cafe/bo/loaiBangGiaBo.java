@@ -1,12 +1,13 @@
 package cafe.bo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cafe.bean.loaiBangGia;
 
 public interface loaiBangGiaBo {
-	public ArrayList<loaiBangGia> get();
-	public ArrayList<loaiBangGia> get(String maBG);
+	public List<loaiBangGia> get();
+	public List<loaiBangGia> get(String maBG);
 	public String add(loaiBangGia loaiBangGia);
 	public String update(loaiBangGia loaiBangGia);
 	public String delete(String maBG);

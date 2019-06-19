@@ -1,34 +1,28 @@
 package cafe.comp;
 
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JButton;
-import java.awt.FlowLayout;
-import javax.swing.ImageIcon;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
-import java.awt.event.ActionEvent;
+
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
-import cafe.view._manHinhChinh;
-
-import cafe.bean.khuVuc;
 import cafe.bean.sanPhongBan;
 import cafe.bo.khuVucBo;
 import cafe.bo.khuVucBoJDBC;
@@ -37,31 +31,33 @@ import cafe.bo.loaiBangGiaBoJDBC;
 import cafe.bo.sanPhongBanBo;
 import cafe.bo.sanPhongBanBoJDBC;
 
-public class danhMucSanPhongBan extends JPanel implements ActionListener, MouseListener {
+public class DanhMucSanPhongBan extends JPanel implements ActionListener, MouseListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel danhMuc2_1;
 	private JPanel danhMuc2_2;
 	private JPanel danhMuc2_1_1;
 	private JPanel danhMuc2_1_2;
 	private JPanel danhMuc2_1_1_1;
 	private JPanel danhMuc2_1_1_2;
-	private JLabel label;
 	private JButton close;
 	private JButton add;
 	private JButton edit;
 	private JButton delete;
 	private JButton reload;
-	private JScrollPane scrollPane;
 	private JTable table;
 	private sanPhongBanBo sanPhongBanBo;
 	private DefaultTableModel dm;
-	private danhMuc danhMuc;
+	private DanhMuc danhMuc;
 	private JLabel lblNewLabel;
 	private khuVucBo khuVucBo;
 
 	/**
 	 * Create the panel.
 	 */
-	public danhMucSanPhongBan(danhMuc danhMuc) {
+	public DanhMucSanPhongBan(DanhMuc danhMuc) {
 		this.danhMuc = danhMuc;
 		setBackground(SystemColor.activeCaption);
 		setLayout(new BorderLayout(0, 0));
@@ -81,7 +77,7 @@ public class danhMucSanPhongBan extends JPanel implements ActionListener, MouseL
 		fl_danhMuc2_1_1_1.setAlignment(FlowLayout.LEFT);
 		danhMuc2_1_1.add(danhMuc2_1_1_1);
 		
-		lblNewLabel = new JLabel("BÀN - PHÒNG");
+		lblNewLabel = new JLabel("Bàn phòng");
 		danhMuc2_1_1_1.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
@@ -136,7 +132,19 @@ public class danhMucSanPhongBan extends JPanel implements ActionListener, MouseL
 		sanPhongBanBo = new sanPhongBanBoJDBC();
 		khuVucBo = new khuVucBoJDBC();
 		
-		dm = new DefaultTableModel();
+		dm = new DefaultTableModel(){
+
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
 		dm.addColumn("Mã bàn");
 		dm.addColumn("Tên bàn");
 		dm.addColumn("Khu vực");
@@ -185,7 +193,7 @@ public class danhMucSanPhongBan extends JPanel implements ActionListener, MouseL
 			int row = table.getSelectedRow();
 			if(row != -1) {
 				String maSPB = table.getValueAt(row, 0).toString();
-				new danhMucSanPhongBan_edit(this, maSPB);
+				new DanhMucSanPhongBan_edit(this, maSPB);
 			}else {
 				JOptionPane.showMessageDialog(null, "Bạn chưa chọn hàng nào", "Lỗi", JOptionPane.ERROR_MESSAGE);
 			}
@@ -196,7 +204,7 @@ public class danhMucSanPhongBan extends JPanel implements ActionListener, MouseL
 		}
 		
 		if(e.getSource() == add) {
-			danhMucSanPhongBan_add danhMucSanPhongBan_add = new danhMucSanPhongBan_add(this);
+			DanhMucSanPhongBan_add danhMucSanPhongBan_add = new DanhMucSanPhongBan_add(this);
 			danhMucSanPhongBan_add.setVisible(true);
 		}
 		

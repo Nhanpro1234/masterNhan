@@ -1,36 +1,34 @@
 package cafe.comp;
 
+import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import cafe.view._dangNhap;
-import cafe.view._manHinhChinh;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import cafe.view.DangNhap;
+import cafe.view.ManHinhChinh;
 
-public class head2_heThong extends JPanel implements ActionListener {
+public class Head2_heThong extends JPanel implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton btnDanhMuc,btnTuyChon,btnSanPham,btnKhachHang,btnNhanVien,btnMatKhau,btnDangXuat;
 	public String user;
-	public _manHinhChinh _manHinhChinh;
+	public ManHinhChinh _manHinhChinh;
 
-	public head2_heThong(String user, _manHinhChinh _manHinhChinh) {
+	public Head2_heThong(String user, ManHinhChinh _manHinhChinh) {
 		setBackground(SystemColor.activeCaption);
 		setBounds(0, 47, 1360, 106);
 		this.user = user;
 		this._manHinhChinh = _manHinhChinh;
 		setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-
 		btnDanhMuc = new JButton("Danh mục");
 		btnDanhMuc.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnDanhMuc.setIcon(new ImageIcon("image/danh-muc.png"));
@@ -94,12 +92,12 @@ public class head2_heThong extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == btnMatKhau) {
-			_doiMatKhau _doiMatKhau = new _doiMatKhau(user);
+			DoiMatKhau _doiMatKhau = new DoiMatKhau(user, this);
 			_doiMatKhau.setVisible(true);
 		}
 
 		if(e.getSource() == btnDangXuat) {
-			_dangNhap dn = new _dangNhap();
+			DangNhap dn = new DangNhap();
 			dn.setVisible(true);
 			_manHinhChinh.dispose();
 		}
@@ -109,7 +107,7 @@ public class head2_heThong extends JPanel implements ActionListener {
 				return;
 			}
 			
-			danhMuc danhMuc = new danhMuc(_manHinhChinh);
+			DanhMuc danhMuc = new DanhMuc(_manHinhChinh);
 			_manHinhChinh.getTabbedPane().add("Danh mục", danhMuc);
 			
 			showJtabbedPane();
@@ -119,7 +117,7 @@ public class head2_heThong extends JPanel implements ActionListener {
 			if(checkTabs("Sản phẩm")) {
 				return;
 			}
-			sanPham sanPham = new sanPham(_manHinhChinh);
+			SanPham sanPham = new SanPham(_manHinhChinh);
 			_manHinhChinh.getTabbedPane().add("Sản phẩm", sanPham);
 			
 			showJtabbedPane();
