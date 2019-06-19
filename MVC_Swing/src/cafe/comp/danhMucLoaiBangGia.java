@@ -187,7 +187,7 @@ public class DanhMucLoaiBangGia extends JPanel implements ActionListener, MouseL
 		}
 		
 		if(e.getSource() == add) {
-			new DanhMucLoaiBangGia_add(this);
+			new DanhMucLoaiBangGiaAdd(this);
 		}
 		
 		if(e.getSource() == delete) {

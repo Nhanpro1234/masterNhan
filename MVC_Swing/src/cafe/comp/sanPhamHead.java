@@ -22,16 +22,15 @@ public class SanPhamHead extends JPanel implements ActionListener {
 	private JButton addNhom;
 	private JButton editNhom;
 	private JButton delete;
-	private JButton capNhat;
-	private JButton luuSP;
 	private JLabel label;
 	private JButton chuyenSP;
 	private JButton xoaSP;
-	
-	private SanPham sanPham;
 	private JButton dongBo;
+	private SanPham sanPham;
 	
-	private nhomHangBo nhomHangBo = new nhomHangBoJDBC();;
+	private nhomHangBo nhomHangBo = new nhomHangBoJDBC();
+	private JLabel lblNewLabel;
+	private JButton close;;
 	
 	public SanPhamHead(SanPham sanPham) {
 		this.sanPham = sanPham;
@@ -66,18 +65,6 @@ public class SanPhamHead extends JPanel implements ActionListener {
 		label.setFont(new Font("Dialog", Font.PLAIN, 12));
 		add(label);
 		
-		capNhat = new JButton("Cập nhật");
-		capNhat.addActionListener(this);
-		capNhat.setIcon(new ImageIcon("image\\tai-lai-danh-muc.png"));
-		capNhat.setFont(new Font("Dialog", Font.PLAIN, 12));
-		add(capNhat);
-		
-		luuSP = new JButton("Lưu SP");
-		luuSP.addActionListener(this);
-		luuSP.setIcon(new ImageIcon("image\\save.png"));
-		luuSP.setFont(new Font("Dialog", Font.PLAIN, 12));
-		add(luuSP);
-		
 		chuyenSP = new JButton("Chuyển SP");
 		chuyenSP.addActionListener(this);
 		chuyenSP.setIcon(new ImageIcon("image\\transfer.png"));
@@ -90,6 +77,15 @@ public class SanPhamHead extends JPanel implements ActionListener {
 		xoaSP.setFont(new Font("Dialog", Font.PLAIN, 12));
 		add(xoaSP);
 		
+		lblNewLabel = new JLabel("|");
+		add(lblNewLabel);
+		
+		close = new JButton("Đóng cửa sổ");
+		close.addActionListener(this);
+		close.setIcon(new ImageIcon("image\\close.png"));
+		close.setFont(new Font("Dialog", Font.PLAIN, 12));
+		add(close);
+		
 		
 	}
 
@@ -97,8 +93,7 @@ public class SanPhamHead extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == addNhom) {
 			try {
-				//String data = sanPham.getTree().getSelectionPath().getLastPathComponent().toString();
-				NhomHang_add nhomHang_add = new NhomHang_add(sanPham);
+				NhomHangAdd nhomHang_add = new NhomHangAdd(sanPham);
 				nhomHang_add.setVisible(true);
 			} catch (Exception e2) {
 				JOptionPane.showMessageDialog(null, "Bạn chưa chọn cột nào để thêm vào");
@@ -115,18 +110,27 @@ public class SanPhamHead extends JPanel implements ActionListener {
 			}
 			
 			String[] data = sanPham.getTree().getSelectionPath().getLastPathComponent().toString().split(":");
+			if(!nhomHangBo.isMaNH(data[0])) {
+				JOptionPane.showMessageDialog(null, "Mã bộ phận không tồn tại !!");
+				return;
+			}
+			
 			nhomHangBo.deleteByMaCha(data[0]);
 			JOptionPane.showMessageDialog(null, nhomHangBo.delete(data[0]));
 			sanPham.loadTree();
 		}
 		
 		if(e.getSource() == editNhom) {
-			if(sanPham.getTree().getSelectionPath() == null) {
+			if(sanPham.getTree().getSelectionPath() == null || sanPham.getTree().getSelectionPath().getLastPathComponent().toString().equals("Hàng hóa sản phẩm dịch vụ")) {
 				return;
 			}
 			
-			NhomHang_edit nhomHang_edit = new NhomHang_edit(sanPham);
+			NhomHangEdit nhomHang_edit = new NhomHangEdit(sanPham);
 			nhomHang_edit.setVisible(true);
+		}
+		
+		if(e.getSource() == close) {
+			sanPham.get_manHinhChinh().getTabbedPane().remove(sanPham.get_manHinhChinh().getTabbedPane().getSelectedComponent());
 		}
 	}
 

@@ -5,13 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import cafe.bean.boPhan;
 import cafe.bean.nhomHang;
 
-public class nhomHangDaoJDBC implements nhomHangDao {
-	
+public class boPhanDaoJDBC implements boPhanDao {
+
 	@Override
-	public ArrayList<nhomHang> get() {
-		ArrayList<nhomHang> ress = new ArrayList<>();
+	public ArrayList<boPhan> get() {
+		ArrayList<boPhan> ress = new ArrayList<>();
 
 		dataBase dataBase = new dataBase();
 		Connection conn = dataBase.conn();
@@ -19,13 +20,13 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 			return ress;
 		}
 
-		String sql = "SELECT * FROM `nhom_hang`";
+		String sql = "SELECT * FROM `bo_phan`";
 
 		try {
 			PreparedStatement s = conn.prepareStatement(sql);
 			ResultSet r = s.executeQuery();
 			while(r.next()) {
-				ress.add(new nhomHang(r.getString("maNhom"), r.getString("maCha"), r.getString("tenNhom"), r.getInt("loaiNhom")));
+				ress.add(new boPhan(r.getString("maBP"), r.getString("maCha"), r.getString("tenBP")));
 			}
 			return ress;
 		} catch (Exception e) {
@@ -36,8 +37,8 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 	}
 
 	@Override
-	public ArrayList<nhomHang> get(String maNH) {
-		ArrayList<nhomHang> ress = new ArrayList<>();
+	public ArrayList<boPhan> get(String maBP) {
+		ArrayList<boPhan> ress = new ArrayList<>();
 
 		dataBase dataBase = new dataBase();
 		Connection conn = dataBase.conn();
@@ -45,18 +46,17 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 			return ress;
 		}
 
-		String sql = "SELECT * FROM `nhom_hang` where maNhom = ?";
+		String sql = "SELECT * FROM `bo_phan` where maBP = ?";
 
 		try {
 			PreparedStatement s = conn.prepareStatement(sql);
-			s.setString(1, maNH);
+			s.setString(1, maBP);
 			ResultSet r = s.executeQuery();
 			while(r.next()) {
-				ress.add(new nhomHang(r.getString("maNhom"), r.getString("maCha"), r.getString("tenNhom"), r.getInt("loaiNhom")));
+				ress.add(new boPhan(r.getString("maBP"), r.getString("maCha"), r.getString("tenBP")));
 			}
 			return ress;
 		} catch (Exception e) {
-			
 		} finally {
 			dataBase.disconect(conn);
 		}
@@ -64,20 +64,19 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 	}
 
 	@Override
-	public String add(nhomHang nhomHang) {
+	public String add(boPhan boPhan) {
 		dataBase dataBase = new dataBase();
 		Connection conn = dataBase.conn();
 		if(conn == null) {
 			return "Lỗi kết nối sql";
 		}
 		
-		String sql = "INSERT INTO `nhom_hang`(`maNhom`, `maCha`, `tenNhom`, `loaiNhom`) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO `bo_phan` VALUES (?, ?, ?)";
 		try {
 			PreparedStatement s = conn.prepareStatement(sql);
-			s.setString(1, nhomHang.getMaNhom());
-			s.setString(2, nhomHang.getMaCha());
-			s.setString(3, nhomHang.getTenNhom());
-			s.setInt(4, nhomHang.getLoaiNhom());
+			s.setString(1, boPhan.getMaBP());
+			s.setString(2, boPhan.getMaCha());
+			s.setString(3, boPhan.getTenBP());
 			
 			int check = s.executeUpdate();
 			if(check > 0) {
@@ -94,8 +93,8 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 	}
 
 	@Override
-	public String update(nhomHang nhomHang) {
-		if(isMaNH(nhomHang.getMaNhom()) == false) {
+	public String update(boPhan boPhan) {
+		if(isMaBP(boPhan.getMaBP()) == false) {
 			return "Nhóm hàng không tồn tại";
 		}
 
@@ -104,14 +103,12 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 		if(conn == null){
 			return "Lỗi kết nối >> SQL <<";
 		}
-		String sql = "UPDATE `nhom_hang` SET `maCha`= ?,`tenNhom`= ?,`loaiNhom`= ? WHERE `maNhom` = ?";
+		String sql = "UPDATE `bo_phan` SET `maCha`= ?,`tenBP`= ? WHERE `maBP`= ?";
 		try {
 			PreparedStatement s = conn.prepareStatement(sql);
-			s.setString(1, nhomHang.getMaCha());
-			s.setString(2, nhomHang.getTenNhom());
-			s.setInt(3, nhomHang.getLoaiNhom());
-			s.setString(4, nhomHang.getMaNhom());
-
+			s.setString(1, boPhan.getMaCha());
+			s.setString(2, boPhan.getTenBP());
+			s.setString(3, boPhan.getMaBP());
 			
 			int check = s.executeUpdate();
 			if(check > 0) {
@@ -123,11 +120,12 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 			dataBase.disconect(conn);
 		}
 		return "Cập nhật không thành công";
+		
 	}
 
 	@Override
-	public String delete(String maNH) {
-		if(isMaNH(maNH) == false) {
+	public String delete(String maBP) {
+		if(isMaBP(maBP) == false) {
 			return "Nhóm hàng không tồn tại";
 		}
 		
@@ -136,10 +134,10 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 		if(conn == null){
 			return "Lỗi kết nối >> SQL <<";
 		}
-		String sql = "DELETE FROM `nhom_hang` where `maNhom` = ?";
+		String sql = "DELETE FROM `bo_phan` where `maBP` = ?";
 		try {
 			PreparedStatement s = conn.prepareStatement(sql);
-			s.setString(1, maNH);
+			s.setString(1, maBP);
 			
 			int check = s.executeUpdate();
 			if(check > 0) {
@@ -147,7 +145,6 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 			}
 			
 		} catch (Exception e) {
-			
 			return "Lỗi exception";
 		} finally {
 			dataBase.disconect(conn);
@@ -156,16 +153,39 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 	}
 
 	@Override
-	public boolean isMaNH(String maNH) {
+	public boolean isMaBP(String maBP) {
 		dataBase dataBase = new dataBase();
 		Connection conn = dataBase.conn();
 		if(conn == null){
 			return false;
 		}
-		String sql = "SELECT * FROM `nhom_hang` Where `maNhom` = ?";
+		String sql = "SELECT * FROM `bo_phan` Where `maBP` = ?";
 		try {
 			PreparedStatement s = conn.prepareStatement(sql);
-			s.setString(1, maNH);
+			s.setString(1, maBP);
+			ResultSet result = s.executeQuery();
+			if(result.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			return false;
+		} finally {
+			dataBase.disconect(conn);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isMaCha(String maCha) {
+		dataBase dataBase = new dataBase();
+		Connection conn = dataBase.conn();
+		if(conn == null){
+			return false;
+		}
+		String sql = "SELECT * FROM `bo_phan` Where `maCha` = ?";
+		try {
+			PreparedStatement s = conn.prepareStatement(sql);
+			s.setString(1, maCha);
 			ResultSet result = s.executeQuery();
 			if(result.next()) {
 				return true;
@@ -185,7 +205,7 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 		if(conn == null){
 			return "Lỗi kết nối >> SQL <<";
 		}
-		String sql = "DELETE FROM `nhom_hang` where `maCha` = ?";
+		String sql = "DELETE FROM `bo_phan` where `maCha` = ?";
 		try {
 			PreparedStatement s = conn.prepareStatement(sql);
 			s.setString(1, maCha);
@@ -203,27 +223,4 @@ public class nhomHangDaoJDBC implements nhomHangDao {
 		return "Xóa thất bại";
 	}
 
-	@Override
-	public boolean isMaCha(String maCha) {
-		dataBase dataBase = new dataBase();
-		Connection conn = dataBase.conn();
-		if(conn == null){
-			return false;
-		}
-		String sql = "SELECT * FROM `nhom_hang` Where `maCha` = ?";
-		try {
-			PreparedStatement s = conn.prepareStatement(sql);
-			s.setString(1, maCha);
-			ResultSet result = s.executeQuery();
-			if(result.next()) {
-				return true;
-			}
-		} catch (Exception e) {
-			return false;
-		} finally {
-			dataBase.disconect(conn);
-		}
-		return false;
-	}
-	
 }

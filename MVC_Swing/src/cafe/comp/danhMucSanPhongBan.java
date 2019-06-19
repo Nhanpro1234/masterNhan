@@ -193,7 +193,7 @@ public class DanhMucSanPhongBan extends JPanel implements ActionListener, MouseL
 			int row = table.getSelectedRow();
 			if(row != -1) {
 				String maSPB = table.getValueAt(row, 0).toString();
-				new DanhMucSanPhongBan_edit(this, maSPB);
+				new DanhMucSanPhongBanEdit(this, maSPB);
 			}else {
 				JOptionPane.showMessageDialog(null, "Bạn chưa chọn hàng nào", "Lỗi", JOptionPane.ERROR_MESSAGE);
 			}
@@ -204,7 +204,7 @@ public class DanhMucSanPhongBan extends JPanel implements ActionListener, MouseL
 		}
 		
 		if(e.getSource() == add) {
-			DanhMucSanPhongBan_add danhMucSanPhongBan_add = new DanhMucSanPhongBan_add(this);
+			DanhMucSanPhongBanAdd danhMucSanPhongBan_add = new DanhMucSanPhongBanAdd(this);
 			danhMucSanPhongBan_add.setVisible(true);
 		}
 		

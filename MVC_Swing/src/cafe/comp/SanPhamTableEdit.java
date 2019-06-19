@@ -211,6 +211,7 @@ public class SanPhamTableEdit extends JFrame implements ActionListener {
 	 * Và tự đồng bộ lại để lấy mã sản phẩm mới ...
 	 */
 	public void load() {
+		dvt.removeAllItems();
 		tenSP.setText(result.get(0).getTen());
 		
 		String data = SanPham.getTree().getSelectionPath().getLastPathComponent().toString();
@@ -262,6 +263,7 @@ public class SanPhamTableEdit extends JFrame implements ActionListener {
 		if(type == 1) {
 			this.dispose();
 		}
+		
 		load();
 	}
 

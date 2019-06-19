@@ -1,11 +1,10 @@
 package cafe.bo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cafe.bean.loaiBangGia;
-import cafe.dao.loaiBangGiaDaoJDBC;
 import cafe.dao.loaiBangGiaDao;
+import cafe.dao.loaiBangGiaDaoJDBC;
 
 public class loaiBangGiaBoJDBC implements loaiBangGiaBo {
 

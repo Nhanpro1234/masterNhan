@@ -12,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,6 +27,9 @@ import cafe.bo.sanPhamBo;
 import cafe.bo.sanPhamBoJDBC;
 import cafe.dao.thaoTacSanPhamDao;
 import cafe.dao.thaoTacSanPhamDaoJDBC;
+import common.grouptable.ColumnGroup;
+import common.grouptable.JCustomTable;
+import javax.swing.ScrollPaneConstants;
 
 public class SanPhamTable extends JPanel implements ActionListener {
 
@@ -35,7 +37,6 @@ public class SanPhamTable extends JPanel implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTable table;
 	private SanPham sanPham;
 	private JPanel footer;
 	private JButton add;
@@ -48,7 +49,7 @@ public class SanPhamTable extends JPanel implements ActionListener {
 	private thaoTacSanPhamDao thaoTacSanPhamDao = new thaoTacSanPhamDaoJDBC();
 	private nhomHangBo nhomHangBo = new nhomHangBoJDBC();
 	private DefaultTableModel model;
-
+	private JCustomTable JTableCS;
 
 	private String maNhom;
 	private JPanel midder;
@@ -75,11 +76,10 @@ public class SanPhamTable extends JPanel implements ActionListener {
 		add(midder, BorderLayout.CENTER);
 		midder.setLayout(new BoxLayout(midder, BoxLayout.Y_AXIS));
 
-		table = new JTable();
-		table.setRowHeight(20);
-		table.getTableHeader().setReorderingAllowed(false);
-		table.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		JScrollPane scrollPane = new JScrollPane(table);
+		JTableCS = new JCustomTable(model);
+		JScrollPane scrollPane = new JScrollPane(JTableCS);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		midder.add(scrollPane);
 
 		footer = new JPanel();
@@ -118,7 +118,7 @@ public class SanPhamTable extends JPanel implements ActionListener {
 		addDataJTable();
 		maNhomCuoiCung();
 	}
-	
+
 	public void autoAddColumForSP() {
 		List<thaoTacSanPham> result = null;
 
@@ -128,7 +128,7 @@ public class SanPhamTable extends JPanel implements ActionListener {
 			String[] split = this.maNhom.split(":");
 			result = thaoTacSanPhamDao.get(split[0]);
 		}
-		
+
 		for (thaoTacSanPham thaoTacSanPham : result) {
 			for (loaiBangGia loaiBangGia : loaiBangGiaBo.get()) {
 				if(!thaoTacSanPhamDao.checSPvsBG(thaoTacSanPham.getMa(), loaiBangGia.getMaBG())) {
@@ -174,7 +174,7 @@ public class SanPhamTable extends JPanel implements ActionListener {
 	 * Hàm này dùng để thêm cột vào JTable, tự động co giản khi có nhiều khu vực với bảng giá khác nhau
 	 */
 	public void addColumnJTable() {
-		table.removeAll();
+		JTableCS.removeAll();
 
 		model  = new DefaultTableModel(){
 			private static final long serialVersionUID = 1L;
@@ -190,21 +190,35 @@ public class SanPhamTable extends JPanel implements ActionListener {
 		model.addColumn("Tên");
 		model.addColumn("ĐVT");
 
-		for (loaiBangGia d : loaiBangGiaBo.get()) {
-			model.addColumn("Đơn giá - " + d.getTenBG());
-			model.addColumn("Giảm - " + d.getTenBG());
+		for (@SuppressWarnings("unused") loaiBangGia d : loaiBangGiaBo.get()) {
+			model.addColumn("Đơn giá");
+			model.addColumn("Giảm");
 		}
 
-		table.setModel(model);
-		table.getColumn("#").setMaxWidth(30);
-		table.getColumn("Mã").setPreferredWidth(10);
-		table.getColumn("Tên").setPreferredWidth(20);
-		table.getColumn("ĐVT").setPreferredWidth(10);
+		JTableCS.setModel(model);
+		JTableCS.getColumn("#").setMaxWidth(30);
+		JTableCS.getColumn("Mã").setPreferredWidth(10);
+		JTableCS.getColumn("Tên").setPreferredWidth(20);
+		JTableCS.getColumn("ĐVT").setPreferredWidth(10);
 
-		for (loaiBangGia d : loaiBangGiaBo.get()) {
-			table.getColumn("Đơn giá - " + d.getTenBG()).setPreferredWidth(20);
-			table.getColumn("Giảm - " + d.getTenBG()).setPreferredWidth(20);
+		for (@SuppressWarnings("unused") loaiBangGia d : loaiBangGiaBo.get()) {
+			JTableCS.getColumn("Đơn giá").setPreferredWidth(20);
+			JTableCS.getColumn("Giảm").setPreferredWidth(20);
 		}
+
+		ColumnGroup[] chungTuColumnGroup = new ColumnGroup[loaiBangGiaBo.get().size()];
+		for (int i = 0; i < chungTuColumnGroup.length; i++) {
+			chungTuColumnGroup[i] = new ColumnGroup(loaiBangGiaBo.get().get(i).getTenBG());
+		}
+		
+		int dem = 0;
+		for (int i = 4; i < JTableCS.getColumnCount(); i=i+2) {
+			chungTuColumnGroup[dem].add(JTableCS.getColumn(i));
+			chungTuColumnGroup[dem].add(JTableCS.getColumn(i+1));
+			JTableCS.addColumnGroup(chungTuColumnGroup[dem]);
+			dem++;
+		}
+		
 	}
 
 
@@ -244,7 +258,7 @@ public class SanPhamTable extends JPanel implements ActionListener {
 	 * phát sinh trong lúc sử dụng, nên không thể xóa được !
 	 */
 	public void xoaSanPham() {
-		int row = table.getSelectedRow();
+		int row = JTableCS.getSelectedRow();
 		if(row != -1) {
 			String maSP = model.getValueAt(row, 1).toString();
 			bangGiaBo.deleteByMaSP(maSP);
@@ -259,7 +273,7 @@ public class SanPhamTable extends JPanel implements ActionListener {
 	 * Hàm này dùng để sửa sản phẩm
 	 */
 	public void suaSanPham() {
-		int row = table.getSelectedRow();
+		int row = JTableCS.getSelectedRow();
 		if(row != -1) {
 			SanPhamTableEdit sanPhamTableEdit = new SanPhamTableEdit(sanPham, model.getValueAt(row, 1).toString());
 			sanPhamTableEdit.setVisible(true);

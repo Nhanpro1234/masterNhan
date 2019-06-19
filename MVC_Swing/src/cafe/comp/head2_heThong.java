@@ -123,6 +123,16 @@ public class Head2_heThong extends JPanel implements ActionListener {
 			showJtabbedPane();
 		}
 		
+		if(e.getSource() == btnNhanVien) {
+			if(checkTabs("Nhân viên")) {
+				return;
+			}
+			NhanVien NhanVien = new NhanVien(_manHinhChinh);
+			_manHinhChinh.getTabbedPane().add("Nhân viên", NhanVien);
+			
+			showJtabbedPane();
+		}
+		
 	}
 	
 	public boolean checkTabs(String title) {
